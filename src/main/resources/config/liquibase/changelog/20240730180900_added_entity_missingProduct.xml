@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240730180900-1" author="rucha">
+        <createTable tableName="missing_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="missing_product_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="brand_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="TEXT">
+            <constraints nullable="true"/>
+            </column>
+            <column name="barcode_image" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="product_front_image" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="catscan_error_image" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ingredient_image" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="reference_website" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="more_about" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="other_images" type="JSON">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="missing_product"
+                             baseColumnNames="user_id"
+                             constraintName="fk_missing_product_user"
+                             referencedTableName="sfl_user"
+                             referencedColumnNames="id"/>
+</changeSet>
+
+    <changeSet id="20240730180900-1-audit" author="henil">
+        <addColumn tableName="missing_product">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250428122713" author="nilesh">
+        <addColumn tableName="missing_product">
+            <column name="product_barcode" type="VARCHAR(255)" afterColumn="barcode_image">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250429162513" author="nilesh">
+        <addColumn tableName="missing_product">
+            <column name="urep_front_pkg_ocr" type="VARCHAR(255)" afterColumn="product_front_image">
+                <constraints nullable="true"/>
+            </column>
+            <column name="urep_ingred_ocr" type="VARCHAR(255)" afterColumn="ingredient_image">
+                <constraints nullable="true"/>
+            </column>
+            <column name="urep_cs_error_ocr" type="VARCHAR(255)" afterColumn="catscan_error_image">
+                <constraints nullable="true"/>
+            </column>
+            <column name="urep_opt1_ocr" type="VARCHAR(255)" afterColumn="other_images">
+                <constraints nullable="true"/>
+            </column>
+            <column name="urep_opt2_ocr" type="VARCHAR(255)" afterColumn="other_images">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250520171813" author="nilesh">
+        <modifyDataType tableName="missing_product" columnName="urep_front_pkg_ocr" newDataType="TEXT"/>
+        <modifyDataType tableName="missing_product" columnName="urep_ingred_ocr" newDataType="TEXT"/>
+        <modifyDataType tableName="missing_product" columnName="urep_cs_error_ocr" newDataType="TEXT"/>
+        <modifyDataType tableName="missing_product" columnName="urep_opt1_ocr" newDataType="TEXT"/>
+        <modifyDataType tableName="missing_product" columnName="urep_opt2_ocr" newDataType="TEXT"/>
+    </changeSet>
+
+</databaseChangeLog>

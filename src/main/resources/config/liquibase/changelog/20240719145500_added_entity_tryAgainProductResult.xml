@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240719145500-1" author="rucha">
+        <createTable tableName="try_again_product_result">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="db_index" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ocr_token" type="JSON">
+                <constraints nullable="true"/>
+            </column>
+            <column name="try_again_product_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="try_again_product_result"
+            baseColumnNames="try_again_product_id"
+            constraintName="fk_try_again_product_result_try_again_product"
+            referencedTableName="try_again_product"
+            referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

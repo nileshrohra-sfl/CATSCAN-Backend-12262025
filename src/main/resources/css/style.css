@@ -1,0 +1,267 @@
+/* General CSS */
+
+.body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+p {
+  font-size: 15px;
+}
+
+.reset-title {
+  margin-top: 154px;
+  margin-bottom: 51px;
+  color: black;
+}
+
+label {
+  color: gray;
+}
+
+.form-group {
+  margin-bottom: 30px;
+}
+
+.heading {
+  margin-top: 100px;
+}
+
+.button-save,
+button-save:visited,
+button-save:active,
+button-save:focus {
+  background-color: #187de4;
+  border: 1px solid #187de4;
+  border-radius: 4px;
+  height: 50px;
+  font-size: 18px;
+  outline: 0px !important;
+  margin-bottom: 40px;
+  color: #fff;
+  margin-top: 35px;
+  margin-right: -24px;
+}
+
+.button-save:hover {
+  color: #fff;
+  background-color: #187de4;
+  border-color: #187de4;
+}
+
+.text-danger {
+  color: red;
+}
+
+.info-icon {
+  text-align: end;
+  margin-top: -13px;
+  margin-right: 10px;
+}
+
+.btn-primary:active:hover,
+.btn-primary:active:focus,
+.btn-primary:active:visited {
+  border: #187de4 !important;
+  background-color: #187de4;
+}
+.required {
+  color: red;
+}
+
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+.image-container {
+  text-align: center;
+}
+
+html {
+  overflow-x: hidden;
+}
+.body-container {
+  margin-top: 40px;
+}
+.eye-icon {
+  float: right;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  top: -27px;
+  margin-right: 10px;
+}
+#Successfully {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#Successfully.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+.form-group,
+.input {
+  margin: 10px 0;
+  max-width: 600px;
+  padding: 15px;
+}
+
+.back-img{
+  background-image: url(/images/bg-2.jpg);
+  text-align: center;
+  height: 100vh;
+}
+@media(min-width:1900px){
+  .reset-title {
+    margin-top:235px;
+  }
+}
+@media(min-width:375px) and  (max-width:1365px){
+  .back-img{
+    height: 50vh;
+  }
+}
+@media(min-width:1700px){
+  .image-container{
+    margin-top: 150px;
+  }
+}
+@media(min-width:375px) and (max-width:1365px){
+  .image-container{
+    margin-top: -81px;
+  }
+}
+@media(min-width:375px) and (max-width:1365px){
+  .reset-title {
+    margin-top:50px;
+  }
+}

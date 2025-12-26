@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240925110600_added_entity" author="henil">
+        <createTable tableName="error_log">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="device_id" type="VARCHAR(100)"/>
+            <column name="device_type" type="VARCHAR(100)"/>
+            <column name="device_os_version" type="VARCHAR(100)"/>
+            <column name="app_version" type="VARCHAR(10)"/>
+            <column name="error" type="LONGTEXT"/>
+            <column name="flavor" type="LONGTEXT"/>
+            <column name="status_code" type="VARCHAR(500)"/>
+            <column name="api_request" type="LONGTEXT"/>
+            <column name="api_response" type="LONGTEXT"/>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20250509170213" author="nilesh">
+        <addColumn tableName="error_log">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="device_name" type="VARCHAR(100)" afterColumn="device_type">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unique_device_id" type="VARCHAR(100)" afterColumn="device_id">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="error_log"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_error_log_sfl_user"
+                                 referencedTableName="sfl_user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- ChangeSet for creating TryAgainProduct table -->
+    <changeSet id="20240719145200-1" author="rucha">
+        <createTable tableName="try_again_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="image" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="original_ocr_result" type="JSON">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240719145200-1-audit" author="rucha">
+        <addColumn tableName="try_again_product">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20240719145200-2" author="hmistry">
+        <addColumn tableName="try_again_product">
+            <column name="raw_ocr" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20240719145200-3" author="hmistry">
+        <addColumn tableName="try_again_product">
+            <column name="ocr_result" type="JSON">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20240719145200-4" author="hmistry">
+        <addColumn tableName="try_again_product">
+            <column name="session_id" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20240719145200-5" author="hmistry">
+        <addColumn tableName="try_again_product">
+            <column name="user_selection" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250509122713" author="nilesh">
+        <addColumn tableName="try_again_product">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="try_again_product"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_try_again_product_sfl_user"
+                                 referencedTableName="sfl_user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="20240719145200-6" author="abhishek.pardeshi">
+        <addColumn tableName="try_again_product">
+            <column name="prod_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="prod_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

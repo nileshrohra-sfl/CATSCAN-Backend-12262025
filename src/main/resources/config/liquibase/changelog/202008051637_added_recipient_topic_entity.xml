@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="202008051637" author="vaibhav" dbms="mysql">
+		<createTable tableName="recipient_subscription_topic">
+			<column name="id" type="uuid">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="recipient_id" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="topic" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			tableName="recipient_subscription_topic" columnNames="recipient_id,topic"
+			constraintName="unique_recipient_topic" />
+	</changeSet>
+
+	<changeSet id="202011241150" author="Jinal_Jaguwala">
+		<addColumn tableName="recipient_subscription_topic">
+			<column name="fcm_token" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+
+		<dropUniqueConstraint tableName="recipient_subscription_topic"
+								  constraintName="unique_recipient_topic" />
+
+		<addUniqueConstraint
+				tableName="recipient_subscription_topic" columnNames="recipient_id,topic,fcm_token"
+				constraintName="unique_recipient_topic_fcm_token"/>
+	</changeSet>
+</databaseChangeLog>

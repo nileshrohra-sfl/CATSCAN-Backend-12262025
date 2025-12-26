@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240909180900-1" author="hmistry">
+        <createTable tableName="toxins_product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="toxin_color" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cma_tox_cs_id_master" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="primary_toxin_names_orig" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="calsafer_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="trichem_cancer_chron_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="efsa_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="prop65_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="echa_svhc_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="lancet_norman_humanneurotox_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="japan_ghs_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="tri_chem_pfas_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="chemsec_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="epa_prod_suspect_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="iarc_2024_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ntp_carcin_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="tedx_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unep_pops_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="atsdr_2022_effects_1" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cma_tox_cs_id_single" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="id_name_set" type="LONGTEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="is_deleted" type="boolean" defaultValue="false"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
