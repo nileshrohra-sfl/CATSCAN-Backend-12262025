@@ -151,12 +151,3 @@ Desktop.ini
 ######################
 
 /src/main/resources/config/application-local.yml
-/src/main/resources/config/application-dev.yml
-/src/main/resources/config/application-stage.yml
-/src/main/resources/config/application-prod.yml
-
-# Firebase
-src/main/resources/firebase/*.json
-
-# Environment configs with secrets
-/src/main/resources/config/application-*.yml
