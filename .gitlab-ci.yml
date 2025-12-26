@@ -1,0 +1,90 @@
+stages:
+  - analysis
+  - testing
+  - packaging
+  - archive_and_deploy
+
+analysis:
+  stage: analysis
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  tags:
+    - analysis
+  script:
+    - echo "Running Code Analysis"
+    - java -version
+    - SONAR_TOKEN=$(echo $SONAR_TOKEN_BASE64 | base64 -d)
+    - /opt/sonar-scanner/bin/sonar-scanner -X -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectName=$CI_PROJECT_NAME -Dsonar.projectKey=$CI_PROJECT_NAME -Dsonar.sources=. -Dsonar.exclusions=node_modules/**,src/test/java/com/sfl/core/domain/SflUserTest.java,src/test/java/com/sfl/core/domain/SflUserExtendTest.java -Dsonar.qualitygate.wait=true
+  when: manual
+
+
+testing:
+  stage: testing
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  image: openjdk:17-jdk-alpine
+  rules:
+    - exists:
+        - build.gradle
+    - exists:
+        - gradle.properties
+  script:
+    - |
+      if [ "$SKIP_TESTS" != "true" ]; then
+        export GRADLE_OPTS="-Dorg.gradle.daemon=false"
+        ./gradlew $GRADLE_TEST_ARGS
+      fi
+  when: manual
+
+
+packaging:
+  stage: packaging
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  image: gradle:7.3.0-alpine
+  script:
+    - export GRADLE_OPTS="-Dorg.gradle.daemon=false"
+    - ./gradlew -P"$PROFILE" $GRADLE_BUILD_ARGS
+    - mv $CI_PROJECT_DIR/build/libs/*-SNAPSHOT.war $CI_PROJECT_DIR/ROOT.war
+  artifacts:
+    paths:
+      - "$CI_PROJECT_DIR/ROOT.war"
+  only:
+    - develop
+    - stage
+    - master
+
+
+archive_and_deploy:
+  stage: archive_and_deploy
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  needs:
+    - "packaging"
+  image: alpine:latest
+  script:
+    - echo "Archving"
+    - apk add --no-cache aws-cli openssh zip
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_REGION
+    - echo "Deploying"
+    - aws s3 cp ROOT.war s3://$S3_BUCKET_NAME/$CI_COMMIT_REF_NAME/ROOT.war --no-verify-ssl
+    - echo "$catscan" > catscan.pem
+    - chmod 400 catscan.pem
+    # Add the EC2 instance's SSH key to known_hosts
+    - mkdir -p ~/.ssh
+    - ssh-keyscan $EC2_HOST >> ~/.ssh/known_hosts
+    # Creating project folder structure on EC2
+    - echo "Creating project folder structure on EC2"
+    - echo $CI_COMMIT_REF_NAME
+    - ssh -i catscan.pem ec2-user@$EC2_HOST "mkdir -p /home/ec2-user/$CI_COMMIT_REF_NAME"
+    - cp ROOT.war Deployment/ROOT.war
+    - zip -r deploy.zip Deployment
+    - scp -i catscan.pem deploy.zip ec2-user@$EC2_HOST:/home/ec2-user/$CI_COMMIT_REF_NAME
+    - ssh -v -i catscan.pem ec2-user@$EC2_HOST "cd $CI_COMMIT_REF_NAME && unzip -o deploy.zip && cd Deployment && chmod +x deploy_container.sh && ./deploy_container.sh"
+  only:
+    - develop
+    - stage
+    - master
+

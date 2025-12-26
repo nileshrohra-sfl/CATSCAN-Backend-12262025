@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.sfl.core"
+    },
+    "jhipsterVersion": "6.10.3",
+    "applicationType": "monolith",
+    "baseName": "CatScan",
+    "packageName": "com.sfl.core",
+    "packageFolder": "com/sfl/core",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "M2NkMjU2MDVlYzhmM2E5Yjc0NDM0MWI5Y2I4NTYzNjk2MjhhYTRlOWFjMjA5OWFhYTE3Y2JmMmIyNDUzNzIyNWJlOTk3NmNiZWNkM2Q1ODA2ZGMwYzI0ZmRkMjAzNjllOTgzNjk3ZTc0NTJhYzliNTMzMTVlMTkxNTg2MmZjNWE=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "skipClient": true,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": [],
+    "creationTimestamp": 1602107745338
+  }
+}
