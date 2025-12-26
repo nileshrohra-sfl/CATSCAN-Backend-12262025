@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="202007151130" author="vaibhav" dbms="mysql">
+        <createTable tableName="notification_history" >
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sent_date" type="timestamp">
+            </column>
+            <column name="read_status" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subject" type="varchar(64)">
+            </column>
+            <column name="body" type="clob">
+            </column>
+            <column name="json_reference_data" type="json">
+                <constraints nullable="true" />
+            </column>
+            <column name="recipient_id" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
