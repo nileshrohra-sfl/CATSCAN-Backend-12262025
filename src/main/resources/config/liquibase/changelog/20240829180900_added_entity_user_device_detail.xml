@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240829180900-1" author="hmistry">
+        <createTable tableName="user_device_details">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="operating_system" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="device_name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="device_type" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="disk_size" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ram_size" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unique_id" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_device_details"
+                             baseColumnNames="user_id"
+                             constraintName="fk_user_device_details_user"
+                             referencedTableName="sfl_user"
+                             referencedColumnNames="id"/>
+</changeSet>
+
+    <changeSet id="20240829180900-1-audit" author="henil">
+        <addColumn tableName="user_device_details">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250505120313-2" author="nilesh">
+        <dropColumn tableName="user_device_details" columnName="disk_size"/>
+        <dropColumn tableName="user_device_details" columnName="ram_size"/>
+        <addColumn tableName="user_device_details">
+            <column name="disk_space_total" type="VARCHAR(255)" afterColumn="device_type">
+                <constraints nullable="true"/>
+            </column>
+            <column name="disk_space_used" type="VARCHAR(255)" afterColumn="disk_space_total">
+                <constraints nullable="true"/>
+            </column>
+            <column name="disk_space_free" type="VARCHAR(255)" afterColumn="disk_space_used">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ram_mem_total" type="VARCHAR(255)" afterColumn="disk_space_free">
+                <constraints nullable="true"/>
+            </column>
+            <column name="app_mem" type="VARCHAR(255)" afterColumn="ram_mem_total">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ram_mem_free" type="VARCHAR(255)" afterColumn="app_mem">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250509165713" author="nilesh">
+        <addColumn tableName="user_device_details">
+            <column name="app_disk_space_used" type="VARCHAR(255)" afterColumn="ram_mem_free">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

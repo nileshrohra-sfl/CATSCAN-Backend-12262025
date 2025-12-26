@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+        <property name="autoIncrement" value="true"/>
+
+    <!--
+        Added the entity SflUser.
+    -->
+    <changeSet id="20191216112138-1" author="jhipster">
+        <createTable tableName="sfl_user">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="phone_number" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="image_url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="activation_key" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="status" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="reset_key" type="varchar(20)"/>
+            <column name="reset_date" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210630112138-1" author="vishva">
+        <addColumn tableName="sfl_user">
+            <column name="country_dial_code" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20210630112138-dropColumn-countryDialCode" author="richa">
+        <dropColumn columnName="country_dial_code" tableName="sfl_user">
+            <column  name="country_dial_code"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet id="20210630112138-addColumn" author="richa">
+        <addColumn tableName="sfl_user">
+            <column name="country_dial_code_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20210630112138-mapping" author="richa" runOrder="last">
+
+        <addForeignKeyConstraint baseColumnNames="country_dial_code_id"
+                                 baseTableName="sfl_user"
+                                 constraintName="fk_sfl_user_country_dial_code_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country_dial_code"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+    <changeSet id="20240711133600-1-audit" author="rucha">
+        <addColumn tableName="sfl_user">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20240711133700-1-audit" author="rucha">
+        <addColumn tableName="sfl_user">
+            <column name="deleted_by" type="varchar(50)"/>
+            <column name="deleted_date" type="timestamp"/>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
