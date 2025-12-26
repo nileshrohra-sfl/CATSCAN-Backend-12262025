@@ -1,0 +1,231 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# More information on profiles: https://www.jhipster.tech/profiles/
+# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+logging:
+  level:
+    ROOT: DEBUG
+    io.github.jhipster: DEBUG
+    com.sfl.core: DEBUG
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    enabled: false # By default, the JHipster Registry is not used in the "dev" profile
+    service-url:
+      defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+
+spring:
+  application:
+    name: catscan-dev
+  profiles:
+    active: dev
+    include:
+      - swagger
+      # Uncomment to activate TLS for the dev profile
+      #- tls
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**
+    livereload:
+      enabled: false # we use Webpack dev server + BrowserSync for livereload
+  jackson:
+    serialization:
+      indent-output: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://catscan.c10gg46eg8f8.us-east-2.rds.amazonaws.com:3306/catscan?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: catscan
+    password: qaS3$U33
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  jpa:
+    show-sql: true
+  liquibase:
+    # Remove 'faker' if you do not want the sample data to be loaded automatically
+    contexts: dev, faker
+  mail:
+    host: mailslurper.thesunflowerlab.com
+    port: 8083
+    username:
+    password:
+    tls: false
+    protocol: smtp
+    properties.mail.smtp:
+      auth: false
+      starttls.enable: true
+      ssl.trust: thesunflowerlab-com.mail.protection.outlook.com
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
+
+sso:
+  google:
+    clientId: 409628692651-dj5s6257i3nt7a7qib65gqsjtnu7pe3n.apps.googleusercontent.com
+    appleClientId: 409628692651-vcttnbmpmjd70rgsd7tli3c32jghck00.apps.googleusercontent.com
+  facebook:
+    appId: 1062855264193928
+    appSecret: cbaacc47e02ff49532195a294d40f3a6
+    profileDetailUrl: https://graph.facebook.com/me?fields=id,name,email&access_token={accessToken}
+    verifyTokenUrl: https://graph.facebook.com/debug_token
+  apple:
+    appId: com.sfl.is.soact.dev
+    keyId: 4XM5SXF838
+    teamId: WWX2464VYC
+    authUrl: https://appleid.apple.com/auth/token
+    audienceUrl: https://appleid.apple.com
+# ===================================================================
+# JHipster specific properties
+#
+# Full reference is available at: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+jhipster:
+  cache: # Cache configuration
+    hazelcast: # Hazelcast distributed cache
+      time-to-live-seconds: 3600
+      backup-count: 1
+      management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
+        enabled: false
+        update-interval: 3
+        url: http://localhost:8180/mancenter
+
+  # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
+  cors:
+    allowed-origins: '*'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        base64-secret: M2NkMjU2MDVlYzhmM2E5Yjc0NDM0MWI5Y2I4NTYzNjk2MjhhYTRlOWFjMjA5OWFhYTE3Y2JmMmIyNDUzNzIyNWJlOTk3NmNiZWNkM2Q1ODA2ZGMwYzI0ZmRkMjAzNjllOTgzNjk3ZTc0NTJhYzliNTMzMTVlMTkxNTg2MmZjNWE=
+        # Access Token is valid 15 minutes
+        token-validity-in-seconds: 900
+        # Refresh Token is valid 30 days
+        token-validity-in-seconds-for-remember-me: 2592000
+  mail: # specific JHipster mail property, for standard properties see MailProperties
+    from: dev-sflcore@sunflowerlab.com # sender email address
+    base-url: http://127.0.0.1:8080
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: false
+      report-frequency: 60 # in seconds
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: true
+      host: graylog.thesunflowerlab.com
+      port: 5000
+      queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# More documentation is available at:
+# https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# application:
+twilio:
+  util:
+    features:
+      message: true
+      voice-call: true
+      video-call: true
+      otp : true
+  account:
+    sid: ACaa124f4b72ade4d71f4b4b798384d0ff
+    token: 9b9417c57cc43272aac9b3fcc6b20e26
+    number: "+14632952097"
+    api-key: SK1841c1ab4f9ba1e3744fd8697c4977c4
+    api-secret: rY6FQwe8yLL8M7mkDzfknRnsQemdYIit
+    app-sid: ACaa124f4b72ade4d71f4b4b798384d0ff
+    service-sid: VA5ff3e38326b8cc8154d216e64a452931
+    default-country-code: "+1"
+    android:
+      push-notification-sid: CR703893ac4541fc7fa0f7dcd427646ff4
+    ios:
+      push-notification-sid: CR3814287bc985588e10b16dbd93bb8e58
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAT2MW2LYXW4RLSBGW
+      secretKey: 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
+    region: us-east-2
+    s3:
+      object:
+        expiry-time-in-minutes: 60
+        prefer-signed-URL: false
+      product:
+        bucket:
+          name: catscan-dev
+          url: https://catscan-dev.s3.us-east-2.amazonaws.com
+          public-bucket: https://catscan-images.s3.us-west-2.amazonaws.com/
+      database:
+        bucket:
+          name: cs-pt
+          url: https://cs-pt.s3.us-east-2.amazonaws.com
+          master-path: Master/Products.db
+          update-path: Update
+          expiry-time-in-minutes: 240
+          prefer-signed-url: true
+          extensions: .db
+
+
+
+# ===================================================================
+# Notification Utility specific properties
+# ===================================================================
+
+notification:
+  app:
+    firebase-configuration-file: firebase/baseproject-8dc44-firebase-adminsdk-gdcnn-ee1711d78e.json
+notification.util:
+  use-as: DEPENDANCY
+
+
+app:
+  mobile-login:
+    secret: t7XKJU8medwtEzMb+H8XdQMOzPq0sQ5kqFt5VIQC6iI=
+    value: c6074d59dfa3dec7
+    base64:
+      key: r6G9s6Ps8e4qY0cRxLQziw==
+      iv: U2FsdGVkX1+dZ0R/1R7s3Q==
+
+secret: t7XKJU8medwtEzMb+H8XdQMOzPq0sQ5kqFt5VIQC6iI=
