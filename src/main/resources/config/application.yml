@@ -211,24 +211,3 @@ app:
 
 secret: t7XKJU8medwtEzMb+H8XdQMOzPq0sQ5kqFt5VIQC6iI=
 
-# application:
-twilio:
-  util:
-    features:
-      message: true
-      voice-call: true
-      video-call: true
-      otp : true
-  account:
-    sid: ACaa124f4b72ade4d71f4b4b798384d0ff
-    token: 9b9417c57cc43272aac9b3fcc6b20e26
-    number: "+14632952097"
-    api-key: SK1841c1ab4f9ba1e3744fd8697c4977c4
-    api-secret: rY6FQwe8yLL8M7mkDzfknRnsQemdYIit
-    app-sid: ACaa124f4b72ade4d71f4b4b798384d0ff
-    service-sid: VA5ff3e38326b8cc8154d216e64a452931
-    default-country-code: "+1"
-    android:
-      push-notification-sid: CR703893ac4541fc7fa0f7dcd427646ff4
-    ios:
-      push-notification-sid: CR3814287bc985588e10b16dbd93bb8e58
